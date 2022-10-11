@@ -8,12 +8,12 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tb_game_partner")
+@Table(name = "tb_media")
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
-public class GamePartner {
+public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -21,4 +21,6 @@ public class GamePartner {
     private Game game;
     @ManyToOne
     private Partner partner;
+    @OneToOne(mappedBy = "media")
+    private GameLoan gameLoan;
 }

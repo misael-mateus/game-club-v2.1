@@ -3,7 +3,7 @@ package br.com.projetoweb.service;
 import br.com.projetoweb.dto.GameDTO;
 import br.com.projetoweb.model.Console;
 import br.com.projetoweb.model.Game;
-import br.com.projetoweb.model.GamePartner;
+import br.com.projetoweb.model.Media;
 import br.com.projetoweb.repository.GameRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ import java.util.*;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
-    private final GamePartnerService gamePartnerService;
+    private final MediaService mediaService;
 
     @Autowired
-    public GameService(GameRepository gameRepository, GamePartnerService gamePartnerService) {
+    public GameService(GameRepository gameRepository, MediaService mediaService) {
         this.gameRepository = gameRepository;
-        this.gamePartnerService = gamePartnerService;
+        this.mediaService = mediaService;
     }
 
     @Transactional
@@ -83,8 +83,8 @@ public class GameService {
     }
 
     public Page<Game> findAllGamesFindByPartnerId(Long partnerId, Pageable pageable) {
-        Set<GamePartner> allGamesFindByPartnerId = this.gamePartnerService.findAllGamesFindByPartnerId(partnerId);
-        List<Game> games = new ArrayList<>(allGamesFindByPartnerId.stream().map(GamePartner::getGame).toList());
+        Set<Media> allGamesFindByPartnerId = this.mediaService.findAllGamesFindByPartnerId(partnerId);
+        List<Game> games = new ArrayList<>(allGamesFindByPartnerId.stream().map(Media::getGame).toList());
         return PageableExecutionUtils.getPage(games, pageable, games::size);
     }
 

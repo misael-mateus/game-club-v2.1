@@ -26,9 +26,15 @@ public class Partner {
     private String phoneNumber;
     @OneToMany(mappedBy = "partner")
     @JsonIgnore
-    private Set<GamePartner> games = new HashSet<>();
-    public void setGames(GamePartner... gamers) {
-        for (GamePartner gamer : gamers) {
+    private Set<Media> games = new HashSet<>();
+    @OneToOne(mappedBy = "partner")
+    @JsonIgnore
+    private GameLoan gameLoan;
+
+
+
+    public void setGames(Media... gamers) {
+        for (Media gamer : gamers) {
             gamer.setPartner(this);
             this.games.add(gamer);
         }
